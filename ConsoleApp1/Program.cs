@@ -23,18 +23,22 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Encoding gb = Encoding.GetEncoding("big5");
+            Encoding big5 = Encoding.GetEncoding("big5");
             StringBuilder sb = new StringBuilder();
             int count = 0;
+            byte[] charBytes = new byte[2];
             for (int i = 0xA0; i < 0xFE; i++)
             {
                 for (int l = 0x40; l < 0x7E; l++)
                 {
-                    sb.Append(gb.GetString(new byte[] { (byte)i, (byte)l }));
+                    charBytes[0] = (byte)i;
+                    charBytes[1] = (byte)l;
+                    sb.Append(big5.GetString(charBytes));
                     if (count % 50 == 0)
                     {
                         sb.AppendLine();
                     }
+
                     count++;
                 }
             }
@@ -43,11 +47,14 @@ namespace ConsoleApp1
             {
                 for (int l = 0xA1; l < 0xFE; l++)
                 {
-                    sb.Append(gb.GetString(new byte[] { (byte)i, (byte)l }));
+                    charBytes[0] = (byte)i;
+                    charBytes[1] = (byte)l;
+                    sb.Append(big5.GetString(charBytes));
                     if (count % 50 == 0)
                     {
                         sb.AppendLine();
                     }
+
                     count++;
                 }
             }
